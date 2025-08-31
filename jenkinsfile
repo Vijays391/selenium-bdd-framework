@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     tools {
+        git 'Git'
         maven 'Maven3'     // Name must match the one in Jenkins global config
         jdk 'JDK17'        // Name must match the one in Jenkins global config
     }
