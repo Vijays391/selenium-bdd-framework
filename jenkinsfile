@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven3'     // Name must match the one in Jenkins global config
+        jdk 'JDK17'        // Name must match the one in Jenkins global config
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/<your-username>/selenium-bdd-framework.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Report') {
+            steps {
+                publishHTML([[
+                    reportDir: 'reports',
+                    reportFiles: 'cucumber.html',
+                    reportName: 'Cucumber Report'
+                ]])
+            }
+        }
+    }
+
+    post {
+        always {
+            junit '**/target/surefire-reports/*.xml'
+        }
+    }
+}
