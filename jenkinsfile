@@ -30,11 +30,7 @@ pipeline {
 
         stage('Report') {
             steps {
-                publishHTML([[
-                    reportDir: 'reports',
-                    reportFiles: 'cucumber.html',
-                    reportName: 'Cucumber Report'
-                ]])
+                archiveArtifacts artifacts: 'reports/cucumber.html', fingerprint: true
             }
         }
     }
