@@ -36,9 +36,9 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
-        }
-    }
+//     post {
+//         always {
+//             archiveArtifacts artifacts: 'target/cucumber-reports/*.*', fingerprint: true
+//         }
+//     }
 }
